@@ -62,6 +62,7 @@ export default function DashboardLayout({
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</header>
+			<main className="my-5">{children}</main>
 		</div>
 	);
 }
