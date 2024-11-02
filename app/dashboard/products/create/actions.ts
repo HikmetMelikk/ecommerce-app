@@ -30,7 +30,7 @@ export async function createProduct(prevState: unknown, formData: FormData) {
 			price: submission.value.price,
 			image: flattenUrls,
 			category: submission.value.category,
-			isFeatured: submission.value.isFeatured,
+			isFeatured: submission.value.isFeatured === true ? true : false,
 		},
 	});
 	redirect("/dashboard/products");
@@ -63,7 +63,20 @@ export async function updateProduct(prevState: any, formData: FormData) {
 			price: submission.value.price,
 			image: flattenUrls,
 			category: submission.value.category,
-			isFeatured: submission.value.isFeatured,
+			isFeatured: submission.value.isFeatured === true ? true : false,
+		},
+	});
+	redirect("/dashboard/products");
+}
+
+export async function deleteProduct(formData: FormData) {
+	const user = getUser();
+	if (!user) {
+		return redirect("/login");
+	}
+	await prisma.product.delete({
+		where: {
+			id: formData.get("productId") as string,
 		},
 	});
 	redirect("/dashboard/products");

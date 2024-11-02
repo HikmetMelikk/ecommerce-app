@@ -119,7 +119,7 @@ export function EditForm({ data }: IProductProps) {
 							<Switch
 								key={fields.isFeatured.key}
 								name={fields.isFeatured.name}
-								checked={data.isFeatured}
+								defaultChecked={data.isFeatured}
 							/>
 						</div>
 						<p className="text-red-500">{fields.isFeatured.errors}</p>
