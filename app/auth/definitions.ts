@@ -66,3 +66,8 @@ export const ProductSchema = z.object({
 	category: z.enum(["men", "women", "kids"]),
 	isFeatured: z.boolean().optional(),
 });
+
+export const BannerSchema = z.object({
+	title: z.string(),
+	imageString: z.string(),
+});

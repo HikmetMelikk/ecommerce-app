@@ -1,3 +1,4 @@
+import { deleteProduct } from "@/app/dashboard/actions";
 import { SubmitButton } from "@/components/dashboard/SubmitButton";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,7 +9,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { deleteProduct } from "../../create/actions";
 
 export default function DeleteProduct({ params }: { params: { id: string } }) {
 	return (
