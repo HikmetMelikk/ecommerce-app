@@ -14,8 +14,34 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  email    String @unique
-  password String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  status      ProductStatus
+  price       Int
+  image       String[]
+  category    Category
+  isFeatured  Boolean       @default(false)
+
+  createdAt DateTime @default(now())
+}
+
+enum ProductStatus {
+  draft
+  published
+  archived
+}
+
+enum Category {
+  men
+  women
+  kids
 }

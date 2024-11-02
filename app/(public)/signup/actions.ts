@@ -6,7 +6,6 @@ import { SignupFormSchema } from "../../auth/definitions";
 import { createSession } from "../../auth/session";
 
 export async function signup(state: any, form: FormData) {
-	//1 Validate the form data
 	const validationFields = SignupFormSchema.safeParse({
 		name: form.get("name"),
 		email: form.get("email"),

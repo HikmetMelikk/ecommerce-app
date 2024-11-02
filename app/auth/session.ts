@@ -61,7 +61,7 @@ export async function verifySession() {
 		redirect("/login");
 	}
 
-	return { isAuth: true, userId: Number(session.userId) };
+	return { isAuth: true, userId: session.userId };
 }
 export async function updateSession() {
 	const session = (await cookies()).get("session")?.value;
