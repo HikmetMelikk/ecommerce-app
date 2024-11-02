@@ -4,8 +4,7 @@ import { Loader2 } from "lucide-react";
 import { useFormStatus } from "react-dom";
 import { Button } from "../ui/button";
 
-//TODO: Make this component reusable by passing the text to display on the button
-export function SubmitButton() {
+export function SubmitButton({ text }: { text: string }) {
 	const { pending } = useFormStatus();
 	return (
 		<>
@@ -15,7 +14,7 @@ export function SubmitButton() {
 					Please wait...
 				</Button>
 			) : (
-				<Button type="submit">Create Product</Button>
+				<Button type="submit">{text}</Button>
 			)}
 		</>
 	);

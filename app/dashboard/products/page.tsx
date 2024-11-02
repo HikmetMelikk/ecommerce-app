@@ -94,7 +94,11 @@ export default async function ProductsPage() {
 											<DropdownMenuContent align="end">
 												<DropdownMenuLabel>Actions</DropdownMenuLabel>
 												<DropdownMenuSeparator />
-												<DropdownMenuItem>Edit</DropdownMenuItem>
+												<DropdownMenuItem asChild>
+													<Link href={`/dashboard/products/${item.id}`}>
+														Edit
+													</Link>
+												</DropdownMenuItem>
 												<DropdownMenuItem>Delete</DropdownMenuItem>
 											</DropdownMenuContent>
 										</DropdownMenu>
