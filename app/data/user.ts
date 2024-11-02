@@ -29,6 +29,7 @@ export const getUser = cache(async () => {
 
 function userDTO(user: { id: string; name: string; email: string }) {
 	return {
+		id: user.id,
 		name: user.name,
 		email: user.email,
 	};

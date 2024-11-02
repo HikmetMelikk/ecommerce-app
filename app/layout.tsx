@@ -1,4 +1,7 @@
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import type { Metadata } from "next";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "./api/uploadthing/core";
 import "./globals.css";
 import { montserrat } from "./utils/ui/fonts";
 
@@ -14,7 +17,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${montserrat.className} antialiased`}>{children}</body>
+			<body className={`${montserrat.className} antialiased`}>
+				<NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+				{children}
+			</body>
 		</html>
 	);
 }
