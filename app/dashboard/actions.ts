@@ -3,8 +3,8 @@
 import prisma from "@/prisma/db";
 import { parseWithZod } from "@conform-to/zod";
 import { redirect } from "next/navigation";
-import { ProductSchema } from "../../../auth/definitions";
-import { getUser } from "../../../data/user";
+import { BannerSchema, ProductSchema } from "../auth/definitions";
+import { getUser } from "../data/user";
 
 export async function createProduct(prevState: unknown, formData: FormData) {
 	const user = getUser();
@@ -80,4 +80,40 @@ export async function deleteProduct(formData: FormData) {
 		},
 	});
 	redirect("/dashboard/products");
+}
+
+export async function createBanner(prevState: any, formData: FormData) {
+	const user = getUser();
+	if (!user) {
+		return redirect("/login");
+	}
+
+	const submission = parseWithZod(formData, {
+		schema: BannerSchema,
+	});
+
+	if (submission.status !== "success") {
+		return submission.reply();
+	}
+
+	await prisma.banner.create({
+		data: {
+			title: submission.value.title,
+			imageString: submission.value.imageString,
+		},
+	});
+	redirect("/dashboard/banner");
+}
+
+export async function deleteBanner(formData: FormData) {
+	const user = getUser();
+	if (!user) {
+		return redirect("/login");
+	}
+	await prisma.banner.delete({
+		where: {
+			id: formData.get("bannerId") as string,
+		},
+	});
+	redirect("/dashboard/banner");
 }

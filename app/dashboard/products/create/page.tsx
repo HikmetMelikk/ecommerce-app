@@ -1,6 +1,5 @@
 "use client";
 import { ProductSchema } from "@/app/auth/definitions";
-import { createProduct } from "@/app/dashboard/products/create/actions";
 import { categories } from "@/app/utils/categories";
 import { UploadDropzone } from "@/app/utils/uploadthing";
 import { SubmitButton } from "@/components/dashboard/SubmitButton";
@@ -30,6 +29,7 @@ import { ChevronLeft, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useActionState, useState } from "react";
+import { createProduct } from "../../actions";
 
 export default function ProductCreate() {
 	const [images, setImages] = useState<string[]>([]);
@@ -191,7 +191,7 @@ export default function ProductCreate() {
 					</div>
 				</CardContent>
 				<CardFooter>
-					<SubmitButton />
+					<SubmitButton text="Create Product" />
 				</CardFooter>
 			</Card>
 		</form>
