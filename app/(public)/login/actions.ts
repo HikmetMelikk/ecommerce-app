@@ -44,10 +44,7 @@ export async function login(prevState: any, formData: FormData) {
 		};
 	}
 
-	// Create a new session for the user
 	await createSession(user.id);
-
-	// Redirect the user to the dashboard page
 	redirect("/dashboard");
 }
 
