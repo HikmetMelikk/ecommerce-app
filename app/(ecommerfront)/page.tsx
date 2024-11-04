@@ -1,7 +1,13 @@
+import { CategoriesSelection } from "@/components/ecommercefront/CategorySelection";
+import { FeaturedProducts } from "@/components/ecommercefront/FeaturedProducts";
+import { Hero } from "@/components/ecommercefront/Hero";
+
 export default function IndexPage() {
 	return (
 		<div>
-			<h1>hi</h1>
+			<Hero />
+			<CategoriesSelection />
+			<FeaturedProducts />
 		</div>
 	);
 }
