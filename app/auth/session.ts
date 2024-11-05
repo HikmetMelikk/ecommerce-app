@@ -49,7 +49,7 @@ export async function createSession(userId: string) {
 		sameSite: "lax",
 		path: "/",
 	});
-	redirect("/home");
+	redirect("/dashboard");
 }
 export async function verifySession() {
 	const cookie = (await cookies()).get("session")?.value;
