@@ -10,12 +10,13 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 
-export default function DeleteBannerRoute({
-	params,
-}: {
-	params: { id: string };
-}) {
-	return (
+export default async function DeleteBannerRoute(
+    props: {
+        params: Promise<{ id: string }>;
+    }
+) {
+    const params = await props.params;
+    return (
 		<div>
 			<div className="h-[80vh] w-full flex items-center justify-center">
 				<Card className="max-w-xl">

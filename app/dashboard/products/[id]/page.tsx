@@ -14,11 +14,12 @@ async function getData(productId: string) {
 	return data;
 }
 
-export default async function EditProduct({
-	params,
-}: {
-	params: { id: string };
-}) {
-	const data = await getData(params.id);
-	return <EditForm data={data} />;
+export default async function EditProduct(
+    props: {
+        params: Promise<{ id: string }>;
+    }
+) {
+    const params = await props.params;
+    const data = await getData(params.id);
+    return <EditForm data={data} />;
 }

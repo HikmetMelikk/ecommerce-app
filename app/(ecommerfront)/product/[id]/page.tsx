@@ -26,14 +26,15 @@ async function getProductDetail(productId: string) {
 	return data;
 }
 
-export default async function ProductDetailPage({
-	params,
-}: {
-	params: { id: string };
-}) {
-	const data = await getProductDetail(params.id);
-	const addProductToShoppingCart = addItem.bind(null, data.id);
-	return (
+export default async function ProductDetailPage(
+    props: {
+        params: Promise<{ id: string }>;
+    }
+) {
+    const params = await props.params;
+    const data = await getProductDetail(params.id);
+    const addProductToShoppingCart = addItem.bind(null, data.id);
+    return (
 		<>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start lg:gap-x-12 py-6 ">
 				<ImageSlider images={data.image} />
