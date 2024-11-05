@@ -1,8 +1,9 @@
+import { addItem } from "@/app/utils/actions";
+import { ShoppingBagButton } from "@/components/dashboard/SubmitButton";
 import { FeaturedProducts } from "@/components/ecommercefront/FeaturedProducts";
 import { ImageSlider } from "@/components/ecommercefront/ImageSlider";
-import { Button } from "@/components/ui/button";
 import prisma from "@/prisma/db";
-import { ShoppingBag, StarIcon } from "lucide-react";
+import { StarIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 
 async function getProductDetail(productId: string) {
@@ -31,6 +32,7 @@ export default async function ProductDetailPage({
 	params: { id: string };
 }) {
 	const data = await getProductDetail(params.id);
+	const addProductToShoppingCart = addItem.bind(null, data.id);
 	return (
 		<>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start lg:gap-x-12 py-6 ">
@@ -49,12 +51,15 @@ export default async function ProductDetailPage({
 					</div>
 
 					<p className="text-base text-gray-700 mt-6">{data.description}</p>
-					<Button size="lg" className="w-full mt-5">
-						<ShoppingBag className="mr-4 w-6 h-6" /> Add to cart
-					</Button>
+					<form action={addProductToShoppingCart}>
+						<ShoppingBagButton />
+					</form>
 				</div>
 			</div>
-			<FeaturedProducts />
+
+			<div className="mt-16">
+				<FeaturedProducts />
+			</div>
 		</>
 	);
 }

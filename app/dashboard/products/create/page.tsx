@@ -29,7 +29,7 @@ import { ChevronLeft, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useActionState, useState } from "react";
-import { createProduct } from "../../actions";
+import { createProduct } from "../../../utils/actions";
 
 export default function ProductCreate() {
 	const [images, setImages] = useState<string[]>([]);

@@ -8,6 +8,7 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from "../ui/carousel";
+import { Skeleton } from "../ui/skeleton";
 
 interface IProductCardProps {
 	item: {
@@ -54,6 +55,19 @@ export function ProductCard({ item }: IProductCardProps) {
 			<Button className="w-full mt-5">
 				<Link href={`/product/${item.id}`}>Learn More!</Link>
 			</Button>
+		</div>
+	);
+}
+
+export function LoadingProductCart() {
+	return (
+		<div className=" flex flex-col">
+			<Skeleton className="w-full h-[330px]" />
+			<div className="flex flex-col mt-2 gap-y-2">
+				<Skeleton className="h-4 w-full" />
+				<Skeleton className="h-6 w-full" />
+			</div>
+			<Skeleton className="w-full h-10 mt-5" />
 		</div>
 	);
 }

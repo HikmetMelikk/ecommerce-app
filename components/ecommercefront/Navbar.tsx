@@ -6,6 +6,9 @@ import { NavbarLinks } from "./NavbarLinks";
 import { UserDropdown } from "./UserDropdown";
 
 export async function Navbar() {
+	//TODO: user will be added later
+	//!const cart: Cart | null = await redis.get(`cart-${user?.id}`);
+	//!const total = cart?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
 	return (
 		<nav className="w-full max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
 			<div className="flex items-center">
