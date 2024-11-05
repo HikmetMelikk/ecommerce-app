@@ -1,5 +1,6 @@
 import prisma from "@/prisma/db";
-import { ProductCard } from "./ProductCard";
+import { Suspense } from "react";
+import { LoadingProductCart, ProductCard } from "./ProductCard";
 
 async function getFeaturedProducts() {
 	const data = await prisma.product.findMany({
@@ -20,16 +21,35 @@ async function getFeaturedProducts() {
 	return data;
 }
 
-export async function FeaturedProducts() {
-	const featuredProducts = await getFeaturedProducts();
+export function FeaturedProducts() {
 	return (
 		<>
 			<h2 className="text-2xl font-extrabold tracking-tight">Featured Items</h2>
-			<div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-				{featuredProducts.map((product) => (
-					<ProductCard key={product.id} item={product} />
-				))}
-			</div>
+			<Suspense fallback={<LoadingRows />}>
+				<LoadFeaturedProducts />
+			</Suspense>
 		</>
+	);
+}
+
+async function LoadFeaturedProducts() {
+	const data = await getFeaturedProducts();
+
+	return (
+		<div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+			{data.map((product) => (
+				<ProductCard key={product.id} item={product} />
+			))}
+		</div>
+	);
+}
+
+function LoadingRows() {
+	return (
+		<div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+			<LoadingProductCart />
+			<LoadingProductCart />
+			<LoadingProductCart />
+		</div>
 	);
 }

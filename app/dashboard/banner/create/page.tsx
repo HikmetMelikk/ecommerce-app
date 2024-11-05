@@ -19,7 +19,7 @@ import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useActionState, useState } from "react";
-import { createBanner } from "../../actions";
+import { createBanner } from "../../../utils/actions";
 
 export default function BannerRoute() {
 	const [image, setImages] = useState<string | undefined>(undefined);

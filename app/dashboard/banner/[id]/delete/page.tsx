@@ -1,4 +1,4 @@
-import { deleteBanner } from "@/app/dashboard/actions";
+import { deleteBanner } from "@/app/utils/actions";
 import { SubmitButton } from "@/components/dashboard/SubmitButton";
 import { Button } from "@/components/ui/button";
 import {
