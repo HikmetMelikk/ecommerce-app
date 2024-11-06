@@ -16,7 +16,6 @@ export async function login(prevState: any, formData: FormData) {
 	}
 
 	const { email, password } = result.data;
-
 	// Find the user by email address in the database
 	const user = await prisma.user.findUnique({
 		where: {
@@ -35,7 +34,6 @@ export async function login(prevState: any, formData: FormData) {
 
 	// Compare the password with the hashed password in the database
 	const passwordMatch = await bcrypt.compare(password, user.password);
-
 	if (!passwordMatch) {
 		return {
 			errors: {

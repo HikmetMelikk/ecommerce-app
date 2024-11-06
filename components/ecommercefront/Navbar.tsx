@@ -14,7 +14,7 @@ export async function Navbar() {
 			<div className="flex items-center">
 				<Link href="/">
 					<h1 className="text-black font-bold text-xl lg:text-3xl">
-						Hikmet'in Tükkanı
+						Hikmet&apos;in Tükkanı
 					</h1>
 				</Link>
 				<NavbarLinks />
@@ -33,7 +33,7 @@ export async function Navbar() {
 					</>
 				) : (
 					<div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-2">
-						//TODO: Register and Sign In functionality will be added later
+						{/* //TODO: Register and Sign In functionality will be added later */}
 						<Button asChild variant="ghost">
 							Sign In
 						</Button>

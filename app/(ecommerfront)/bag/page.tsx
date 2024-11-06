@@ -30,10 +30,11 @@ export default async function Bag() {
 						<ShoppingBag className="h-10 w-10 text-primary" />
 					</div>
 					<h2 className="mt- 6 text-xl font-semibold">
-						You don't have have any products in your bag.
+						You don&apos;t have have any products in your bag.
 					</h2>
 					<p className=" mb-8 mt-6 text-center text-sm leading-6 text-muted-foreground max-w-sm mx-auto">
-						You currently don't have any products in your bag. Please add some.
+						You currently don&apos;t have any products in your bag. Please add
+						some.
 					</p>
 					<Button asChild>
 						<Link href="/">Shop Now</Link>

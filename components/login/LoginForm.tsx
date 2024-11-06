@@ -1,43 +1,40 @@
 "use client";
 
-import React, { useActionState } from "react";
-import { useFormStatus } from "react-dom";
+import { useActionState } from "react";
 import { login } from "../../app/(public)/login/actions";
-import styles from "../../app/(public)/login/login.module.css";
+import { SubmitButton } from "../dashboard/SubmitButton";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 export function LoginForm() {
 	const [state, loginAction] = useActionState(login, undefined);
 	return (
-		<div className={styles.loginContainer}>
-			<form action={loginAction} className="authFormStyle">
-				<h1>Login to app</h1>
-				<div className={styles.formGroup}>
-					<label>Email:</label>
-					<input placeholder="Enter your e-mail" id="email" name="email" />
+		<div className="flex items-center justify-center h-[97vh]">
+			<form
+				action={loginAction}
+				className="flex flex-col justify-center min-w-[30vw] min-h-[60vh] p-6 border rounded-md overflow-hidden m-auto bg-white gap-8">
+				<h1 className="text-2xl font-bold text-center mb-6">
+					Login to E-Commerce App
+				</h1>
+
+				<div className="gap-2 flex flex-col w-full">
+					<Label className="text-xl">Email:</Label>
+					<Input placeholder="Enter your e-mail" id="email" name="email" />
 					{state?.errors?.email && (
-						<p className={styles.errorText}>{state.errors.email}</p>
+						<p className="text-red-500 text-sm">{state.errors.email}</p>
 					)}
 				</div>
 
-				<div className={styles.formGroup}>
-					<label>Password:</label>
-					<input type="password" id="password" name="password" />
+				<div className="gap-2 flex flex-col w-full">
+					<Label className="text-xl">Password:</Label>
+					<Input type="password" id="password" name="password" />
 					{state?.errors?.password && (
-						<p className={styles.errorText}>{state.errors.password}</p>
+						<p className="text-red-500 text-sm">{state.errors.password}</p>
 					)}
 				</div>
 
-				<SubmitButton />
+				<SubmitButton text="Log In" />
 			</form>
 		</div>
-	);
-}
-function SubmitButton() {
-	const { pending } = useFormStatus();
-
-	return (
-		<button disabled={pending} type="submit">
-			Login
-		</button>
 	);
 }

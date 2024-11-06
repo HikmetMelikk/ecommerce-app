@@ -8,22 +8,6 @@
 	margin: 0;
 }
 
-.authFormStyle {
-	background-color: white;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	min-width: 30vw;
-	min-height: 60vh;
-	padding: 2rem;
-	border: 1px solid black;
-	border-radius: 0.5rem;
-	gap: 2rem;
-	overflow: hidden;
-	margin: 0 auto;
-}
-
 @layer base {
 	:root {
 		--background: 0 0% 100%;

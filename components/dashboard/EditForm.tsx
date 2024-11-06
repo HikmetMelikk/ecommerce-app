@@ -169,7 +169,7 @@ export function EditForm({ data }: IProductProps) {
 								value={images}
 								key={fields.images.key}
 								name={fields.images.name}
-								defaultValue={fields.images.initialValue as any}
+								defaultValue={fields.images.initialValue as string[]}
 							/>
 							{images.length > 0 ? (
 								<div className="flex gap-5">

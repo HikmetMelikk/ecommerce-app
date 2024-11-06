@@ -5,7 +5,7 @@ import prisma from "@/prisma/db";
 import { SignupFormSchema } from "../../auth/definitions";
 import { createSession } from "../../auth/session";
 
-export async function signup(state: any, form: FormData) {
+export async function signUp(state: any, form: FormData) {
 	const validationFields = SignupFormSchema.safeParse({
 		name: form.get("name"),
 		email: form.get("email"),
