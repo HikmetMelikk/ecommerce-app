@@ -9,7 +9,7 @@ import { getUser } from "../data/user";
 import { Cart } from "./interfaces";
 import { redis } from "./redis";
 
-export async function createProduct(prevState: unknown, formData: FormData) {
+export async function createProduct(prevState: any, formData: FormData) {
 	const user = await getUser();
 	if (!user) {
 		return redirect("/login");

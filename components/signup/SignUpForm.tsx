@@ -13,7 +13,7 @@ export default function SignUpForm() {
 		return "name" in errors || "email" in errors || "password" in errors;
 	};
 
-	const [state, signUpAction, pending] = useActionState(signUp, undefined);
+	const [state, signUpAction] = useActionState(signUp, undefined);
 
 	return (
 		<div className="flex items-center justify-center h-[97vh]">

@@ -49,8 +49,9 @@ export async function createSession(userId: string) {
 		sameSite: "lax",
 		path: "/",
 	});
-	redirect("/dashboard");
+	redirect("/");
 }
+
 export async function verifySession() {
 	const cookie = (await cookies()).get("session")?.value;
 	if (!cookie) {
@@ -63,6 +64,7 @@ export async function verifySession() {
 
 	return { isAuth: true, userId: session.userId };
 }
+
 export async function updateSession() {
 	const session = (await cookies()).get("session")?.value;
 	if (!session) {
