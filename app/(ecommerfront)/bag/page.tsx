@@ -1,8 +1,11 @@
 import { getUser } from "@/app/data/user";
-import { deleteBagItem } from "@/app/utils/actions";
+import { checkOut, deleteBagItem } from "@/app/utils/actions";
 import { Cart } from "@/app/utils/interfaces";
 import { redis } from "@/app/utils/redis";
-import { DeleteButton } from "@/components/dashboard/SubmitButton";
+import {
+	CheckoutButton,
+	DeleteButton,
+} from "@/components/dashboard/SubmitButton";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
@@ -24,7 +27,7 @@ export default async function Bag() {
 
 	return (
 		<div className="max-w-2xl mx-auto mt-10 min-h-[55vh]">
-			{cart?.items.length === 0 ? (
+			{!cart || !cart.items ? (
 				<div className="flex min-h-[400px] flex-col items-center justify-center rounded-lg border-dashed p-8 text-center mt-20">
 					<div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
 						<ShoppingBag className="h-10 w-10 text-primary" />
@@ -72,9 +75,9 @@ export default async function Bag() {
 							<p>Subtotal:</p>
 							<p>${new Intl.NumberFormat("en-US").format(totalPrice)}</p>
 						</div>
-						<Button size="lg" className=" w-full mt-5">
-							Checkout
-						</Button>
+						<form action={checkOut}>
+							<CheckoutButton />
+						</form>
 					</div>
 				</div>
 			)}
