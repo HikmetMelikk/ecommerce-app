@@ -34,8 +34,12 @@ export async function Navbar() {
 				) : (
 					<div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-2">
 						{/* //TODO: Register and Sign In functionality will be added later */}
-						<Button asChild variant="ghost">
-							Sign In
+						<Button variant="ghost" asChild>
+							<Link href="/login">Sign in</Link>
+						</Button>
+						<span className="h-6 w-px bg-gray-200"></span>
+						<Button variant="ghost" asChild>
+							<Link href="/signup">Create Account</Link>
 						</Button>
 					</div>
 				)}
