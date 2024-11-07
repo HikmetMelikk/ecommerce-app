@@ -1,6 +1,6 @@
-import all from "@/public/download.png";
-import women from "@/public/garı.png";
-import men from "@/public/image.png";
+import all from "@/public/all.png";
+import men from "@/public/men.png";
+import women from "@/public/women.png";
 import Image from "next/image";
 import Link from "next/link";
 

@@ -31,11 +31,6 @@ const aggregateData = (data: any) => {
 };
 
 export default function Chart({ data }: ChartProps) {
-	// Veri kontrolü
-	if (!data || data.length === 0) {
-		return <p>No data available</p>;
-	}
-
 	const processedData = aggregateData(data);
 
 	return (

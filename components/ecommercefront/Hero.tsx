@@ -24,15 +24,15 @@ export async function Hero() {
 			<CarouselContent>
 				{data.map((banner) => (
 					<CarouselItem key={banner.id}>
-						<div className="relative h-[60vh] lg:h-[80vh]">
+						<div className="relative h-[60vh] lg:h-[70vh]">
 							<Image
 								alt="Banner Image"
 								src={banner.imageString}
 								fill
-								className="object-cover w-full h-full rounded-xl"
+								className="object-fill w-full h-full rounded-xl"
 							/>
-							<div className="absolute top-6 left-6 bg-opacity-75 bg-black text-white p-6 rounded-xl shadow-lg transition-transform hover:scale-105">
-								<h1 className="text-xl lg:text-3xl font-bold">
+							<div className="absolute bottom-6 left-6 bg-opacity-75 bg-black text-white p-6 rounded-xl shadow-lg transition-transform hover:scale-105">
+								<h1 className="text-xl lg:text-2xl font-bold">
 									{banner.title}
 								</h1>
 							</div>

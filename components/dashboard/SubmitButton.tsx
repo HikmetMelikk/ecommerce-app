@@ -34,10 +34,8 @@ export function SubmitButton({ text, variant }: IButtonProps) {
 		</>
 	);
 }
-
-export function ShoppingBagButton() {
+export function AddProductToShoppingBagButton() {
 	const { pending } = useFormStatus();
-
 	return (
 		<>
 			{pending ? (
@@ -63,7 +61,7 @@ export function DeleteButton() {
 					Removing...
 				</button>
 			) : (
-				<button type="submit" className="font-medium text-primary text-end">
+				<button type="submit" className="font-medium text-red-500 text-end ">
 					Delete
 				</button>
 			)}
