@@ -1,4 +1,3 @@
-import { getUser } from "@/app/data/user";
 import { Cart } from "@/app/utils/interfaces";
 import { redis } from "@/app/utils/redis";
 import { ShoppingBagIcon } from "lucide-react";

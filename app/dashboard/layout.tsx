@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/sheet";
 import { CircleUser, MenuIcon } from "lucide-react";
 import React from "react";
-import { logout } from "../(public)/login/actions";
 
 export default function DashboardLayout({
 	children,

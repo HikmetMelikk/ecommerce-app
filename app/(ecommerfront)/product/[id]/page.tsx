@@ -32,6 +32,7 @@ export default async function ProductDetailPage(props: {
 	const params = await props.params;
 	const data = await getProductDetail(params.id);
 	const addProductToShoppingCart = addItem.bind(null, data.id);
+
 	return (
 		<>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start lg:gap-x-12 py-6 ">

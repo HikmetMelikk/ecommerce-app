@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -27,7 +28,7 @@ export function UserDropdown() {
 					</p>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>Logout</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
