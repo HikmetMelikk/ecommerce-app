@@ -1,5 +1,5 @@
-import { getUser } from "@/app/data/user";
 import { checkOut, deleteBagItem } from "@/app/utils/actions";
+import { getSession } from "@/app/utils/getSession";
 import { Cart } from "@/app/utils/interfaces";
 import { redis } from "@/app/utils/redis";
 import {
@@ -13,10 +13,10 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Bag() {
-	const user = await getUser();
-
+	const session = await getSession();
+	const user = session?.user;
 	if (!user) {
-		return redirect("/login");
+		return redirect("/auth/sign-in");
 	}
 
 	const cart: Cart | null = await redis.get(`cart-${user.id}`);

@@ -1,9 +1,8 @@
 "use client";
 
-import { categories } from "@/app/utils/categories";
-
-import { ProductSchema } from "@/app/auth/definitions";
 import { updateProduct } from "@/app/utils/actions";
+import { categories } from "@/app/utils/categories";
+import { ProductSchema } from "@/app/utils/definitions";
 import { UploadDropzone } from "@/app/utils/uploadthing";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";

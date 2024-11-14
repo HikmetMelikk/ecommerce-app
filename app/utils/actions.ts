@@ -1,20 +1,87 @@
 "use server";
 
+import { stripe } from "@/app/utils/stripe";
+import { signIn } from "@/auth";
 import prisma from "@/prisma/db";
 import { parseWithZod } from "@conform-to/zod";
+import { hash } from "bcrypt";
+import { CredentialsSignin } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
-import { BannerSchema, ProductSchema } from "../auth/definitions";
-import { getUser } from "../data/user";
+import {
+	BannerSchema,
+	ProductSchema,
+	SignInSchema,
+	SignUpSchema,
+} from "./definitions";
+import { getSession } from "./getSession";
 import { Cart } from "./interfaces";
 import { redis } from "./redis";
-import { stripe } from "./stripe";
+
+export const register = async (formData: FormData): Promise<any> => {
+	const submission = parseWithZod(formData, {
+		schema: SignUpSchema,
+	});
+	if (submission.status !== "success") {
+		return submission.reply();
+	}
+	const name = submission.value.name;
+	const email = submission.value.email;
+	const password = submission.value.password;
+
+	if (!email || !password) {
+		throw new Error("Please fill all fields");
+	}
+	// existing user
+	const existingUser = await prisma.user.findUnique({ where: { email } });
+	if (existingUser) throw new Error("User already exists");
+
+	const hashedPassword = await hash(password, 12);
+
+	await prisma.user.create({
+		data: {
+			name: name,
+			email: email,
+			password: hashedPassword,
+		},
+		select: {
+			id: true,
+		},
+	});
+
+	console.log(`User created successfully 🥂`);
+	redirect("/");
+};
+
+export const login = async (formData: FormData): Promise<any> => {
+	const submission = parseWithZod(formData, {
+		schema: SignInSchema,
+	});
+	if (submission.status !== "success") {
+		return submission.reply();
+	}
+	const email = submission.value.email;
+	const password = submission.value.password;
+	try {
+		await signIn("credentials", {
+			redirect: false,
+			callbackUrl: "/",
+			email,
+			password,
+		});
+	} catch (error) {
+		const someError = error as CredentialsSignin;
+		return someError.cause;
+	}
+	redirect("/");
+};
 
 export async function createProduct(prevState: any, formData: FormData) {
-	const user = await getUser();
+	const session = await getSession();
+	const user = session?.user;
 	if (!user) {
-		return redirect("/login");
+		return redirect("/auth/sign-in");
 	}
 	const submission = parseWithZod(formData, {
 		schema: ProductSchema,
@@ -42,9 +109,10 @@ export async function createProduct(prevState: any, formData: FormData) {
 }
 
 export async function updateProduct(prevState: any, formData: FormData) {
-	const user = await getUser();
+	const session = await getSession();
+	const user = session?.user;
 	if (!user) {
-		return redirect("/login");
+		return redirect("/auth/sign-in");
 	}
 	const submission = parseWithZod(formData, {
 		schema: ProductSchema,
@@ -75,9 +143,10 @@ export async function updateProduct(prevState: any, formData: FormData) {
 }
 
 export async function deleteProduct(formData: FormData) {
-	const user = await getUser();
+	const session = await getSession();
+	const user = session?.user;
 	if (!user) {
-		return redirect("/login");
+		return redirect("/auth/sign-in");
 	}
 	await prisma.product.delete({
 		where: {
@@ -88,9 +157,10 @@ export async function deleteProduct(formData: FormData) {
 }
 
 export async function createBanner(prevState: any, formData: FormData) {
-	const user = await getUser();
+	const session = await getSession();
+	const user = session?.user;
 	if (!user) {
-		return redirect("/login");
+		return redirect("/auth/sign-in");
 	}
 
 	const submission = parseWithZod(formData, {
@@ -111,9 +181,10 @@ export async function createBanner(prevState: any, formData: FormData) {
 }
 
 export async function deleteBanner(formData: FormData) {
-	const user = await getUser();
+	const session = await getSession();
+	const user = session?.user;
 	if (!user) {
-		return redirect("/login");
+		return redirect("/auth/sign-in");
 	}
 	await prisma.banner.delete({
 		where: {
@@ -124,9 +195,10 @@ export async function deleteBanner(formData: FormData) {
 }
 
 export async function addItem(productId: string) {
-	const user = await getUser();
+	const session = await getSession();
+	const user = session?.user;
 	if (!user) {
-		return redirect("/login");
+		return redirect("/auth/sign-in");
 	}
 
 	const cart: Cart | null = await redis.get(`cart-${user.id}`);
@@ -189,9 +261,10 @@ export async function addItem(productId: string) {
 }
 
 export async function deleteBagItem(formData: FormData) {
-	const user = await getUser();
+	const session = await getSession();
+	const user = session?.user;
 	if (!user) {
-		return redirect("/login");
+		return redirect("/auth/sign-in");
 	}
 
 	const productId = formData.get("productId");
@@ -209,9 +282,10 @@ export async function deleteBagItem(formData: FormData) {
 }
 
 export async function checkOut() {
-	const user = await getUser();
+	const session = await getSession();
+	const user = session?.user;
 	if (!user) {
-		return redirect("/login");
+		return redirect("/auth/sign-in");
 	}
 
 	const cart: Cart | null = await redis.get(`cart-${user.id}`);
@@ -231,15 +305,15 @@ export async function checkOut() {
 			}));
 
 		const session = await stripe.checkout.sessions.create({
-			mode: "payment",
+			payment_method_types: ["card"],
 			line_items: lineItems,
+			mode: "payment",
 			success_url: "http://localhost:3000/payment/success",
 			cancel_url: "http://localhost:3000/payment/cancel",
 			metadata: {
 				userId: user.id,
 			},
 		});
-
 		return redirect(session.url as string);
 	}
 }

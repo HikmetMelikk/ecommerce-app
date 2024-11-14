@@ -1,3 +1,4 @@
+import { getSession } from "@/app/utils/getSession";
 import { Cart } from "@/app/utils/interfaces";
 import { redis } from "@/app/utils/redis";
 import { ShoppingBagIcon } from "lucide-react";
@@ -7,8 +8,8 @@ import { NavbarLinks } from "./NavbarLinks";
 import { UserDropdown } from "./UserDropdown";
 
 export async function Navbar() {
-	const user = await getUser();
-	//TODO: user will be added later
+	const session = await getSession();
+	const user = session?.user;
 	const cart: Cart | null = await redis.get(`cart-${user?.id}`);
 	const total = cart?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
 	return (
@@ -23,7 +24,7 @@ export async function Navbar() {
 			</div>
 
 			<div className="flex items-center">
-				{(await getUser()) ? (
+				{user ? (
 					<>
 						<Link href="/bag" className="group p-2 flex items-center mr-2">
 							<ShoppingBagIcon className="h-6 w-6 text-gray-400 group-hover:text-gray-500" />
@@ -35,13 +36,12 @@ export async function Navbar() {
 					</>
 				) : (
 					<div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-2">
-						{/* //TODO: Register and Sign In functionality will be added later */}
 						<Button variant="ghost" asChild>
-							<Link href="/login">Sign in</Link>
+							<Link href="/auth/sign-in">Sign in</Link>
 						</Button>
 						<span className="h-6 w-px bg-gray-200"></span>
 						<Button variant="ghost" asChild>
-							<Link href="/signup">Create Account</Link>
+							<Link href="/auth/sign-up">Create Account</Link>
 						</Button>
 					</div>
 				)}

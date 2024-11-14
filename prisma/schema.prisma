@@ -18,11 +18,12 @@ model User {
   name     String
   email    String @unique
   password String
-  role     Role   @default(USER)
+  role     Role   @default(user)
 
   orders Order[]
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
@@ -69,6 +70,6 @@ enum Category {
 }
 
 enum Role {
-  USER
-  ADMIN
+  user
+  admin
 }

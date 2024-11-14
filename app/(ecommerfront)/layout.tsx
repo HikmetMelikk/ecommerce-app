@@ -1,5 +1,5 @@
+import Footer from "@/components/ecommercefront/Footer";
 import { Navbar } from "@/components/ecommercefront/Navbar";
-import Footer from "@/components/footer/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
 export default function EcommerceFrontLayout({

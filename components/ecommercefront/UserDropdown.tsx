@@ -1,4 +1,4 @@
-"use client";
+import { signOut } from "@/auth";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -28,7 +28,17 @@ export function UserDropdown() {
 					</p>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
+				<DropdownMenuItem>
+					<form
+						action={async () => {
+							"use server";
+							await signOut();
+						}}>
+						<Button variant="ghost" className="w-full">
+							Sign out
+						</Button>
+					</form>
+				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

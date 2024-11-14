@@ -1,5 +1,5 @@
 "use client";
-import { BannerSchema } from "@/app/auth/definitions";
+import { BannerSchema } from "@/app/utils/definitions";
 import { UploadDropzone } from "@/app/utils/uploadthing";
 import { SubmitButton } from "@/components/dashboard/SubmitButton";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,7 @@ import Link from "next/link";
 import { useActionState, useState } from "react";
 import { createBanner } from "../../../utils/actions";
 
-export default function BannerRoute() {
+export default async function BannerRoute() {
 	const [image, setImages] = useState<string | undefined>(undefined);
 	const [lastResult, formAction] = useActionState(createBanner, undefined);
 

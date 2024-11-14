@@ -1,6 +1,6 @@
 "use client";
-import { ProductSchema } from "@/app/auth/definitions";
 import { categories } from "@/app/utils/categories";
+import { ProductSchema } from "@/app/utils/definitions";
 import { UploadDropzone } from "@/app/utils/uploadthing";
 import { SubmitButton } from "@/components/dashboard/SubmitButton";
 import { Button } from "@/components/ui/button";
