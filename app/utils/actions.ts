@@ -51,7 +51,7 @@ export const register = async (formData: FormData): Promise<any> => {
 	});
 
 	console.log(`User created successfully 🥂`);
-	redirect("/");
+	redirect("/auth/sign-in");
 };
 
 export const login = async (formData: FormData): Promise<any> => {
