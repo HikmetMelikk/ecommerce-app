@@ -1,5 +1,5 @@
 export type Cart = {
-	userId: string;
+	userId: string | undefined;
 	items: Array<{
 		id: string;
 		name: string;

@@ -1,4 +1,3 @@
-"use client";
 import { DashboardNavigation } from "@/components/dashboard/DashboardNavigation";
 import { Button } from "@/components/ui/button";
 import {

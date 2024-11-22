@@ -1,5 +1,4 @@
 "use client";
-import { ProductSchema } from "@/app/auth/definitions";
 import { categories } from "@/app/utils/categories";
 import { SubmitButton } from "@/components/dashboard/SubmitButton";
 import { Button } from "@/components/ui/button";

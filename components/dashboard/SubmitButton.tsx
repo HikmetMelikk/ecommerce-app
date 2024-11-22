@@ -34,8 +34,10 @@ export function SubmitButton({ text, variant }: IButtonProps) {
 		</>
 	);
 }
+
 export function AddProductToShoppingBagButton() {
 	const { pending } = useFormStatus();
+
 	return (
 		<>
 			{pending ? (

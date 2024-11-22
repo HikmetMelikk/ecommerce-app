@@ -1,9 +1,9 @@
 "use client";
 
+import { updateProduct } from "@/app/utils/actions";
 import { categories } from "@/app/utils/categories";
 
 import { ProductSchema } from "@/app/auth/definitions";
-import { updateProduct } from "@/app/utils/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { type $Enums } from "@prisma/client";
