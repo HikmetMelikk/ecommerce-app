@@ -30,7 +30,7 @@ import { useActionState, useState } from "react";
 import { createProduct } from "../../../utils/actions";
 
 export default function ProductCreate() {
-	const [images, setImages] = useState<string[]>([]);
+	const [images] = useState<string[]>([]);
 	const [lastResult, formAction] = useActionState(createProduct, undefined);
 	const [form, fields] = useForm({
 		lastResult,
