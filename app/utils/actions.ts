@@ -7,11 +7,9 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 
-import { ProductSchema } from "./definitions";
+import { BannerSchema, ProductSchema } from "./definitions";
 import { Cart } from "./interfaces";
 import { redis } from "./redis";
-
-
 
 export async function createProduct(prevState: any, formData: FormData) {
 	const submission = parseWithZod(formData, {
