@@ -30,6 +30,7 @@
 		"bcryptjs": "^2.4.3",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
+		"ecommerce-app": "link:",
 		"embla-carousel-react": "^8.3.1",
 		"jose": "^5.9.6",
 		"lucide-react": "^0.454.0",
