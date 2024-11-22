@@ -1,4 +1,4 @@
-import { getSession } from "@/app/utils/getSession";
+import { currentUser } from "@clerk/nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 
@@ -9,9 +9,7 @@ export const ourFileRouter = {
 	imageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 10 } })
 		// Set permissions and file types for this FileRoute
 		.middleware(async () => {
-			const session = await getSession();
-			const user = session?.user;
-
+			const user = await currentUser();
 			// If you throw, the user will not be able to upload
 			if (!user) throw new UploadThingError("Unauthorized: User not found");
 			// Whatever is returned here is accessible in onUploadComplete as `metadata`
@@ -27,8 +25,7 @@ export const ourFileRouter = {
 	bannerImageRoute: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
 		// Set permissions and file types for this FileRoute
 		.middleware(async () => {
-			const session = await getSession();
-			const user = session?.user;
+			const user = await currentUser();
 			// If you throw, the user will not be able to upload
 			if (!user) throw new UploadThingError("Unauthorized: User not found");
 			// Whatever is returned here is accessible in onUploadComplete as `metadata`

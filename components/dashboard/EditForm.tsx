@@ -2,13 +2,12 @@
 
 import { updateProduct } from "@/app/utils/actions";
 import { categories } from "@/app/utils/categories";
+
 import { ProductSchema } from "@/app/utils/definitions";
-import { UploadDropzone } from "@/app/utils/uploadthing";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { type $Enums } from "@prisma/client";
-import { ChevronLeft, XIcon } from "lucide-react";
-import Image from "next/image";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import { Button } from "../ui/button";
@@ -57,9 +56,9 @@ export function EditForm({ data }: IProductProps) {
 		shouldValidate: "onBlur",
 		shouldRevalidate: "onInput",
 	});
-	const handleDeleteImage = (index: number) => {
-		setImages(images.filter((_, i) => i !== index));
-	};
+	// const handleDeleteImage = (index: number) => {
+	// 	setImages(images.filter((_, i) => i !== index));
+	// };
 	return (
 		<form id={form.id} onSubmit={form.onSubmit} action={formAction}>
 			<input type="hidden" name="productId" value={data.id} />
@@ -170,7 +169,7 @@ export function EditForm({ data }: IProductProps) {
 								name={fields.images.name}
 								defaultValue={fields.images.initialValue as string[]}
 							/>
-							{images.length > 0 ? (
+							{/* {images.length > 0 ? (
 								<div className="flex gap-5">
 									{images.map((image, index) => (
 										<div key={index} className="relative w-[100px] h-[100px]">
@@ -200,7 +199,7 @@ export function EditForm({ data }: IProductProps) {
 										alert("Something went wrong");
 									}}
 								/>
-							)}
+							)} */}
 							<p className="text-red-500">{fields.images.errors}</p>
 						</div>
 					</div>

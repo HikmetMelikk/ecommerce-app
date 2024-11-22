@@ -1,4 +1,3 @@
-import { signOut } from "@/auth";
 import { DashboardNavigation } from "@/components/dashboard/DashboardNavigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,7 +16,6 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { CircleUser, MenuIcon } from "lucide-react";
-import { redirect } from "next/navigation";
 import React from "react";
 
 export default function DashboardLayout({
@@ -59,16 +57,7 @@ export default function DashboardLayout({
 						<DropdownMenuLabel>My Account</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem>
-							<form
-								action={async () => {
-									"use server";
-									await signOut();
-									redirect("/");
-								}}>
-								<Button type="submit" variant="ghost">
-									Logout
-								</Button>
-							</form>
+							<p>Sign Out</p>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

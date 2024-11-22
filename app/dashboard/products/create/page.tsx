@@ -1,7 +1,6 @@
 "use client";
 import { categories } from "@/app/utils/categories";
 import { ProductSchema } from "@/app/utils/definitions";
-import { UploadDropzone } from "@/app/utils/uploadthing";
 import { SubmitButton } from "@/components/dashboard/SubmitButton";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,8 +24,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { ChevronLeft, XIcon } from "lucide-react";
-import Image from "next/image";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import { createProduct } from "../../../utils/actions";
@@ -43,9 +41,9 @@ export default function ProductCreate() {
 		shouldRevalidate: "onInput",
 	});
 
-	const handleDeleteImage = (index: number) => {
-		setImages(images.filter((_, i) => i !== index));
-	};
+	// const handleDeleteImage = (index: number) => {
+	// 	setImages(images.filter((_, i) => i !== index));
+	// };
 	return (
 		<form id={form.id} onSubmit={form.onSubmit} action={formAction}>
 			<div className="flex items-center gap-4">
@@ -155,7 +153,7 @@ export default function ProductCreate() {
 								name={fields.images.name}
 								defaultValue={fields.images.initialValue as string[]}
 							/>
-							{images.length > 0 ? (
+							{/* {images.length > 0 ? (
 								<div className="flex gap-5">
 									{images.map((image, index) => (
 										<div key={index} className="relative w-[100px] h-[100px]">
@@ -185,7 +183,7 @@ export default function ProductCreate() {
 										alert("Something went wrong");
 									}}
 								/>
-							)}
+							)} */}
 							<p className="text-red-500">{fields.images.errors}</p>
 						</div>
 					</div>

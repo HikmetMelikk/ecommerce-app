@@ -29,7 +29,7 @@ export async function Hero() {
 								alt="Banner Image"
 								src={banner.imageString}
 								fill
-								className="object-fill w-full h-full rounded-xl"
+								className="object-contain w-full h-full rounded-xl"
 							/>
 							<div className="absolute bottom-6 left-6 bg-opacity-75 bg-black text-white p-6 rounded-xl shadow-lg transition-transform hover:scale-105">
 								<h1 className="text-xl lg:text-2xl font-bold">

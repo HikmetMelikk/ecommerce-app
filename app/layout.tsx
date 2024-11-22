@@ -4,7 +4,6 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import "./globals.css";
 import { montserrat } from "./utils/ui/fonts";
-
 export const metadata: Metadata = {
 	title: "E-commerce App",
 	description: "E-commerce App",

@@ -1,6 +1,5 @@
 "use client";
 import { BannerSchema } from "@/app/utils/definitions";
-import { UploadDropzone } from "@/app/utils/uploadthing";
 import { SubmitButton } from "@/components/dashboard/SubmitButton";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,13 +15,12 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { ChevronLeft } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import { createBanner } from "../../../utils/actions";
 
-export default async function BannerRoute() {
-	const [image, setImages] = useState<string | undefined>(undefined);
+export default function BannerRoute() {
+	// const [image, setImages] = useState<string | undefined>(undefined);
 	const [lastResult, formAction] = useActionState(createBanner, undefined);
 
 	const [form, fields] = useForm({
@@ -64,14 +62,14 @@ export default async function BannerRoute() {
 						</div>
 						<div className="flex flex-col gap-3">
 							<Label>Image</Label>
-							<input
+							{/* <input
 								type="hidden"
 								name={fields.imageString.name}
 								value={image}
 								key={fields.imageString.key}
 								defaultValue={fields.imageString.initialValue}
-							/>
-							{image !== undefined ? (
+							/> */}
+							{/* {image !== undefined ? (
 								<Image
 									src={image}
 									alt="Product Image"
@@ -89,7 +87,7 @@ export default async function BannerRoute() {
 									}}
 									endpoint="bannerImageRoute"
 								/>
-							)}
+							)} */}
 							<p className="text-red-500">{fields.imageString.errors}</p>
 						</div>
 					</div>
