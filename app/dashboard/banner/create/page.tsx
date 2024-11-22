@@ -1,5 +1,5 @@
 "use client";
-import { BannerSchema } from "@/app/auth/definitions";
+import { BannerSchema } from "@/app/utils/definitions";
 import { SubmitButton } from "@/components/dashboard/SubmitButton";
 import { Button } from "@/components/ui/button";
 import {

@@ -15,7 +15,6 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
-import { SignOutButton } from "@clerk/nextjs";
 import { CircleUser, MenuIcon } from "lucide-react";
 import React from "react";
 
@@ -58,7 +57,7 @@ export default function DashboardLayout({
 						<DropdownMenuLabel>My Account</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem>
-							<SignOutButton>Sign Out</SignOutButton>
+							<p>Sign Out</p>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

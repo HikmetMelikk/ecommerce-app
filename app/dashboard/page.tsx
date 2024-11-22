@@ -9,8 +9,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import prisma from "@/prisma/db";
-import { redirect } from "next/navigation";
-import { getSession } from "../utils/getSession";
 
 async function getData() {
 	const now = new Date();
@@ -38,11 +36,7 @@ async function getData() {
 }
 
 export default async function Dashboard() {
-	const session = await getSession();
-	const user = session?.user;
-	if (!user || user.role !== "admin") {
-		redirect("/");
-	}
+
 	const data = await getData();
 	return (
 		<>

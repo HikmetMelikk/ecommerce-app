@@ -1,5 +1,6 @@
 "use client";
 import { categories } from "@/app/utils/categories";
+import { ProductSchema } from "@/app/utils/definitions";
 import { SubmitButton } from "@/components/dashboard/SubmitButton";
 import { Button } from "@/components/ui/button";
 import {
