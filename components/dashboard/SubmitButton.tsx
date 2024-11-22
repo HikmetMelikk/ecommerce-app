@@ -27,7 +27,7 @@ export function SubmitButton({ text, variant }: IButtonProps) {
 					Please wait...
 				</Button>
 			) : (
-				<Button variant={variant} type="submit">
+				<Button variant={variant} type="submit" disabled={true}>
 					{text}
 				</Button>
 			)}

@@ -1,4 +1,3 @@
-import { getUser } from "@/app/data/user";
 import { checkOut, deleteBagItem } from "@/app/utils/actions";
 import { Cart } from "@/app/utils/interfaces";
 import { redis } from "@/app/utils/redis";
@@ -10,24 +9,17 @@ import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export default async function Bag() {
-	const user = await getUser();
-
-	if (!user) {
-		return redirect("/login");
-	}
-
-	const cart: Cart | null = await redis.get(`cart-${user.id}`);
-	let totalPrice = 0;
+	const cart: Cart | null = await redis.get("cart");
+	// let totalPrice = 0;
 	const cartIsEmpty = !cart || !cart.items || cart.items.length === 0;
 
-	if (!cartIsEmpty) {
-		cart.items.forEach((item) => {
-			totalPrice += item.price * item.quantity;
-		});
-	}
+	// if (!cartIsEmpty) {
+	// 	cart.items.forEach((item) => {
+	// 		totalPrice += item.price * item.quantity;
+	// 	});
+	// }
 
 	return (
 		<div className="max-w-2xl mx-auto mt-10 min-h-[55vh]">
@@ -77,7 +69,7 @@ export default async function Bag() {
 					<div className="mt-10">
 						<div className="flex items-center justify-between font-medium">
 							<p>Subtotal:</p>
-							<p>${new Intl.NumberFormat("en-US").format(totalPrice)}</p>
+							<p>$5</p>
 						</div>
 						<form action={checkOut}>
 							<CheckoutButton />

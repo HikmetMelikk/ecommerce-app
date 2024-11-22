@@ -6,16 +6,11 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { BannerSchema, ProductSchema } from "../auth/definitions";
-import { getUser } from "../data/user";
 import { Cart } from "./interfaces";
 import { redis } from "./redis";
 import { stripe } from "./stripe";
 
 export async function createProduct(prevState: any, formData: FormData) {
-	const user = await getUser();
-	if (!user) {
-		return redirect("/login");
-	}
 	const submission = parseWithZod(formData, {
 		schema: ProductSchema,
 	});
@@ -42,10 +37,6 @@ export async function createProduct(prevState: any, formData: FormData) {
 }
 
 export async function updateProduct(prevState: any, formData: FormData) {
-	const user = await getUser();
-	if (!user) {
-		return redirect("/login");
-	}
 	const submission = parseWithZod(formData, {
 		schema: ProductSchema,
 	});
@@ -75,10 +66,6 @@ export async function updateProduct(prevState: any, formData: FormData) {
 }
 
 export async function deleteProduct(formData: FormData) {
-	const user = await getUser();
-	if (!user) {
-		return redirect("/login");
-	}
 	await prisma.product.delete({
 		where: {
 			id: formData.get("productId") as string,
@@ -88,11 +75,6 @@ export async function deleteProduct(formData: FormData) {
 }
 
 export async function createBanner(prevState: any, formData: FormData) {
-	const user = await getUser();
-	if (!user) {
-		return redirect("/login");
-	}
-
 	const submission = parseWithZod(formData, {
 		schema: BannerSchema,
 	});
@@ -111,10 +93,6 @@ export async function createBanner(prevState: any, formData: FormData) {
 }
 
 export async function deleteBanner(formData: FormData) {
-	const user = await getUser();
-	if (!user) {
-		return redirect("/login");
-	}
 	await prisma.banner.delete({
 		where: {
 			id: formData.get("bannerId") as string,
@@ -124,12 +102,7 @@ export async function deleteBanner(formData: FormData) {
 }
 
 export async function addItem(productId: string) {
-	const user = await getUser();
-	if (!user) {
-		return redirect("/login");
-	}
-
-	const cart: Cart | null = await redis.get(`cart-${user.id}`);
+	// const cart: Cart | null = await redis.get(`cart-${user.id}`);
 
 	const selectedProduct = await prisma.product.findUnique({
 		select: {
@@ -147,74 +120,64 @@ export async function addItem(productId: string) {
 		throw new Error("No product found with this id!");
 	}
 
-	let myCart = {} as Cart;
+	// let myCart = {} as Cart;
 
-	if (!cart || !cart.items) {
-		myCart = {
-			userId: user.id,
-			items: [
-				{
-					price: selectedProduct.price,
-					id: selectedProduct.id,
-					imageString: selectedProduct.image[0],
-					name: selectedProduct.name,
-					quantity: 1,
-				},
-			],
-		};
-	} else {
-		let itemFound = false;
+	// if (!cart || !cart.items) {
+	// 	myCart = {
+	// 		userId: user.id,
+	// 		items: [
+	// 			{
+	// 				price: selectedProduct.price,
+	// 				id: selectedProduct.id,
+	// 				imageString: selectedProduct.image[0],
+	// 				name: selectedProduct.name,
+	// 				quantity: 1,
+	// 			},
+	// 		],
+	// 	};
+	// } else {
+	// 	let itemFound = false;
 
-		myCart.items = cart.items.map((item) => {
-			if (item.id === productId) {
-				itemFound = true;
-				item.quantity += 1;
-			}
-			return item;
-		});
+	// 	myCart.items = cart.items.map((item) => {
+	// 		if (item.id === productId) {
+	// 			itemFound = true;
+	// 			item.quantity += 1;
+	// 		}
+	// 		return item;
+	// 	});
 
-		if (!itemFound) {
-			myCart.items.push({
-				price: selectedProduct.price,
-				id: selectedProduct.id,
-				imageString: selectedProduct.image[0],
-				name: selectedProduct.name,
-				quantity: 1,
-			});
-		}
-	}
+	// 	if (!itemFound) {
+	// 		myCart.items.push({
+	// 			price: selectedProduct.price,
+	// 			id: selectedProduct.id,
+	// 			imageString: selectedProduct.image[0],
+	// 			name: selectedProduct.name,
+	// 			quantity: 1,
+	// 		});
+	// 	}
+	// }
 
-	await redis.set(`cart-${user.id}`, myCart);
+	// await redis.set(`cart-${user.id}`, myCart);
 	revalidatePath("/", "layout");
 }
 
 export async function deleteBagItem(formData: FormData) {
-	const user = await getUser();
-	if (!user) {
-		return redirect("/login");
-	}
+	// const productId = formData.get("productId");
 
-	const productId = formData.get("productId");
+	// const cart: Cart | null = await redis.get(`cart`);
 
-	const cart: Cart | null = await redis.get(`cart-${user.id}`);
-
-	if (cart && cart.items) {
-		const updatedCart: Cart = {
-			userId: user.id,
-			items: cart.items.filter((item) => item.id !== productId),
-		};
-		await redis.set(`cart-${user.id}`, updatedCart);
-	}
+	// if (cart && cart.items) {
+	// 	const updatedCart: Cart = {
+	// 		userId: user.id,
+	// 		items: cart.items.filter((item) => item.id !== productId),
+	// 	};
+	// 	await redis.set(`cart`, updatedCart);
+	// }
 	revalidatePath("/bag");
 }
 
 export async function checkOut() {
-	const user = await getUser();
-	if (!user) {
-		return redirect("/login");
-	}
-
-	const cart: Cart | null = await redis.get(`cart-${user.id}`);
+	const cart: Cart | null = await redis.get("cart");
 
 	if (cart && cart.items) {
 		const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] =
@@ -236,7 +199,7 @@ export async function checkOut() {
 			success_url: "http://localhost:3000/payment/success",
 			cancel_url: "http://localhost:3000/payment/cancel",
 			metadata: {
-				userId: user.id,
+				// userId: user.id,
 			},
 		});
 

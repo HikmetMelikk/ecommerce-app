@@ -16,9 +16,9 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
+import { SignOutButton } from "@clerk/nextjs";
 import { CircleUser, MenuIcon } from "lucide-react";
 import React from "react";
-import { logout } from "../(public)/login/actions";
 
 export default function DashboardLayout({
 	children,
@@ -58,7 +58,9 @@ export default function DashboardLayout({
 					<DropdownMenuContent align="end">
 						<DropdownMenuLabel>My Account</DropdownMenuLabel>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
+						<DropdownMenuItem>
+							<SignOutButton>Sign Out</SignOutButton>
+						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</header>
