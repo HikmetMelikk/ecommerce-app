@@ -1,4 +1,3 @@
-import { addItem } from "@/app/utils/actions";
 import { AddProductToShoppingBagButton } from "@/components/dashboard/SubmitButton";
 import { FeaturedProducts } from "@/components/ecommercefront/FeaturedProducts";
 import { ImageSlider } from "@/components/ecommercefront/ImageSlider";
@@ -31,7 +30,6 @@ export default async function ProductDetailPage(props: {
 }) {
 	const params = await props.params;
 	const data = await getProductDetail(params.id);
-	const addProductToShoppingCart = addItem.bind(null, data.id);
 
 	return (
 		<>
@@ -51,9 +49,7 @@ export default async function ProductDetailPage(props: {
 						))}
 					</div>
 					<p className="text-base text-gray-700 mt-6">{data.description}</p>
-					<form action={addProductToShoppingCart}>
-						<AddProductToShoppingBagButton />
-					</form>
+					<AddProductToShoppingBagButton />
 				</div>
 			</div>
 

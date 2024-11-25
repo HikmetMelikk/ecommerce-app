@@ -1,15 +1,10 @@
 "use server";
 
-import { stripe } from "@/app/utils/stripe";
 import prisma from "@/prisma/db";
 import { parseWithZod } from "@conform-to/zod";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import Stripe from "stripe";
 
 import { BannerSchema, ProductSchema } from "./definitions";
-import { Cart } from "./interfaces";
-import { redis } from "./redis";
 
 export async function createProduct(prevState: any, formData: FormData) {
 	const submission = parseWithZod(formData, {
@@ -100,110 +95,4 @@ export async function deleteBanner(formData: FormData) {
 		},
 	});
 	redirect("/dashboard/banner");
-}
-
-export async function addItem(productId: string) {
-	// const cart: Cart | null = await redis.get(`cart-${user.id}`);
-
-	const selectedProduct = await prisma.product.findUnique({
-		select: {
-			id: true,
-			name: true,
-			price: true,
-			image: true,
-		},
-		where: {
-			id: productId,
-		},
-	});
-
-	if (!selectedProduct) {
-		throw new Error("No product found with this id!");
-	}
-
-	// let myCart = {} as Cart;
-
-	// if (!cart || !cart.items) {
-	// 	myCart = {
-	// 		userId: user.id,
-	// 		items: [
-	// 			{
-	// 				price: selectedProduct.price,
-	// 				id: selectedProduct.id,
-	// 				imageString: selectedProduct.image[0],
-	// 				name: selectedProduct.name,
-	// 				quantity: 1,
-	// 			},
-	// 		],
-	// 	};
-	// } else {
-	// 	let itemFound = false;
-
-	// 	myCart.items = cart.items.map((item) => {
-	// 		if (item.id === productId) {
-	// 			itemFound = true;
-	// 			item.quantity += 1;
-	// 		}
-	// 		return item;
-	// 	});
-
-	// 	if (!itemFound) {
-	// 		myCart.items.push({
-	// 			price: selectedProduct.price,
-	// 			id: selectedProduct.id,
-	// 			imageString: selectedProduct.image[0],
-	// 			name: selectedProduct.name,
-	// 			quantity: 1,
-	// 		});
-	// 	}
-	// }
-
-	// await redis.set(`cart-${user.id}`, myCart);
-	revalidatePath("/", "layout");
-}
-
-export async function deleteBagItem(formData: FormData) {
-	// const productId = formData.get("productId");
-
-	// const cart: Cart | null = await redis.get(`cart`);
-
-	// if (cart && cart.items) {
-	// 	const updatedCart: Cart = {
-	// 		userId: user.id,
-	// 		items: cart.items.filter((item) => item.id !== productId),
-	// 	};
-	// 	await redis.set(`cart`, updatedCart);
-	// }
-	revalidatePath("/bag");
-}
-
-export async function checkOut() {
-	const cart: Cart | null = await redis.get("cart");
-
-	if (cart && cart.items) {
-		const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] =
-			cart.items.map((item) => ({
-				price_data: {
-					currency: "usd",
-					unit_amount: item.price * 100,
-					product_data: {
-						name: item.name,
-						images: [item.imageString],
-					},
-				},
-				quantity: item.quantity,
-			}));
-
-		const session = await stripe.checkout.sessions.create({
-			payment_method_types: ["card"],
-			line_items: lineItems,
-			mode: "payment",
-			success_url: "http://localhost:3000/payment/success",
-			cancel_url: "http://localhost:3000/payment/cancel",
-			metadata: {
-				// userId: user.id,
-			},
-		});
-		return redirect(session.url as string);
-	}
 }
